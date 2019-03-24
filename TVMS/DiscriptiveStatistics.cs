@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.Win32;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -175,7 +176,7 @@ namespace TVMS
         {
             double MM = Max(arr) - Min(arr);
             var s = arr.Select(x => x / MM).ToArray();
-            return (double[])s;
+            return s;
         }
         /// <summary>
         /// Нормирование с помощью дисперсии
@@ -202,12 +203,39 @@ namespace TVMS
 
             for (int i = 0; i < s.Length; i++)
             {
-
-                
-arr[i] = double.Parse(s[i]);
+                arr[i] = double.Parse(s[i]);
             }
 
             return arr;
+        }
+        public static string Output(double[][] arr)
+        {
+            string s = "";
+            for(int i = 0; i < arr.Length; i++)
+            {
+                double[] buf = arr[i];
+                for (int j = 0; j < buf.Length; j++) s += buf[j] + " ";
+                s += "\n";
+            }
+            return s;
+        }
+        public static string OpenExcel(string Colum, int Start, int End)
+        {
+            string s = "";
+            OpenFileDialog ofd = new OpenFileDialog();
+            if (ofd.ShowDialog() == true)
+            {
+                Microsoft.Office.Interop.Excel.Application ObjExcel = new Microsoft.Office.Interop.Excel.Application();
+                Microsoft.Office.Interop.Excel.Workbook ObjWorkbook = ObjExcel.Workbooks.Open(ofd.FileName, 0, false, 5, "", "", false, Microsoft.Office.Interop.Excel.XlPlatform.xlWindows, "", true, false, 0, true, false, false);
+                Microsoft.Office.Interop.Excel.Worksheet objworksheet = (Microsoft.Office.Interop.Excel.Worksheet)ObjWorkbook.Sheets[1];
+                for (int i = Start; i < End+1; i++)
+                {
+                    Microsoft.Office.Interop.Excel.Range range = objworksheet.get_Range(Colum + i.ToString(),Colum + i.ToString());
+                    s += range.Text + "\n";
+                }
+                ObjExcel.Quit();
+            }
+            return s;
         }
     }
 }

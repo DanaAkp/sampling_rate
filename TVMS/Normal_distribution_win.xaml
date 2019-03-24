@@ -1,0 +1,19 @@
+﻿<Window x:Class="TVMS.Normal_distribution_win"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:TVMS"
+        mc:Ignorable="d"
+        Title="Normal_distribution_win" Height="300" Width="500">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <TextBox x:Name="tblres" Grid.RowSpan="3"/>
+        <Button x:Name="btn" Grid.Row="3" Click="Btn_Click" Content="btn"/>
+    </Grid>
+</Window>

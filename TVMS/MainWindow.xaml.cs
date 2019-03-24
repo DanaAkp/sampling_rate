@@ -62,5 +62,11 @@ namespace TVMS
                 File.WriteAllText(sd.FileName, DiscriptiveStatistics.Output(sampleRationing));
             }
         }
+
+        private void BtnNormalDistribution_Click(object sender, RoutedEventArgs e)
+        {
+            Normal_distribution_win win = new Normal_distribution_win();
+            win.Show();
+        }
     }
 }
