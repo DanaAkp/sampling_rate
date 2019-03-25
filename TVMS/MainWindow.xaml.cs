@@ -36,6 +36,7 @@ namespace TVMS
             if (FileOT.ShowDialog() == true)
             {
                 Stream ms = new FileStream(FileOT.FileName, FileMode.Open);
+                lblNameFile.Content = FileOT.FileName;
                 byte[] array = new byte[ms.Length];
                 ms.Read(array, 0, array.Length);
                 string buf = Encoding.Default.GetString(array);
