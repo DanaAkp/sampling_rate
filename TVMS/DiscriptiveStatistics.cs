@@ -10,7 +10,6 @@ namespace TVMS
 
     class DiscriptiveStatistics
     {
-
         /// <summary>
         /// Нахождение среднего для какой-то совокупности
         /// </summary>
@@ -171,7 +170,11 @@ namespace TVMS
             s += "\nСчет: " + arr.Length;
             return s;
         }
-
+        /// <summary>
+        /// Нормирование с помощью максимального и минимального элементов
+        /// </summary>
+        /// <param name="arr"></param>
+        /// <returns></returns>
         public static double[] Rationing_MaxMin(double[] arr)
         {
             double MM = Max(arr) - Min(arr);
@@ -231,7 +234,7 @@ namespace TVMS
                 for (int i = Start; i < End+1; i++)
                 {
                     Microsoft.Office.Interop.Excel.Range range = objworksheet.get_Range(Colum + i.ToString(),Colum + i.ToString());
-                    s += range.Text + "\n";
+                    s += range.Text + "\r\n";
                 }
                 ObjExcel.Quit();
             }
