@@ -189,6 +189,11 @@ namespace TVMS
         {
 
         }
+        /// <summary>
+        /// Вывод массива
+        /// </summary>
+        /// <param name="arr"></param>
+        /// <returns></returns>
         public static string Output(double[] arr)
         {
             string s = "";
@@ -199,6 +204,11 @@ namespace TVMS
             s += "\n";
             return s;
         }
+        /// <summary>
+        /// Получение массива выборки данных из строки
+        /// </summary>
+        /// <param name="source">Исходная строка</param>
+        /// <returns></returns>
         public static double[] GetSample(string source)
         {
             string[] s = source.Trim().Split(new string[] { "\r\n" }, StringSplitOptions.RemoveEmptyEntries).Select(x => x.Replace('.', ',')).ToArray();
@@ -211,6 +221,11 @@ namespace TVMS
 
             return arr;
         }
+        /// <summary>
+        /// Вывод массива массивов
+        /// </summary>
+        /// <param name="arr"></param>
+        /// <returns></returns>
         public static string Output(double[][] arr)
         {
             string s = "";
@@ -222,6 +237,13 @@ namespace TVMS
             }
             return s;
         }
+        /// <summary>
+        /// Получение строки из определенного столбца в заданном диапазоне
+        /// </summary>
+        /// <param name="Colum">Столбец для считывания</param>
+        /// <param name="Start">Начало интервала</param>
+        /// <param name="End">Конец интервала</param>
+        /// <returns></returns>
         public static string OpenExcel(string Colum, int Start, int End)
         {
             string s = "";
@@ -239,6 +261,35 @@ namespace TVMS
                 ObjExcel.Quit();
             }
             return s;
+        }
+        /// <summary>
+        /// Получение значения функции Лапласа
+        /// </summary>
+        /// <param name="argument"></param>
+        /// <returns></returns>
+        public static double GetValueLaplasFunction(double argument)
+        {
+            double value = 0;
+
+            string s = "";
+            OpenFileDialog ofd = new OpenFileDialog();
+            if (ofd.ShowDialog() == true)
+            {
+                Microsoft.Office.Interop.Excel.Application ObjExcel = new Microsoft.Office.Interop.Excel.Application();
+                Microsoft.Office.Interop.Excel.Workbook ObjWorkbook = ObjExcel.Workbooks.Open(ofd.FileName, 0, false, 5, "", "", false, Microsoft.Office.Interop.Excel.XlPlatform.xlWindows, "", true, false, 0, true, false, false);
+                Microsoft.Office.Interop.Excel.Worksheet objworksheet = (Microsoft.Office.Interop.Excel.Worksheet)ObjWorkbook.Sheets[1];
+                for (int i = 1; i < 501; i++)
+                {
+                    Microsoft.Office.Interop.Excel.Range range = objworksheet.get_Range("A" + i.ToString(), "A" + i.ToString());
+                    if(double.Parse(range.Text)==argument)
+                    {
+                        range = objworksheet.get_Range("B" + i.ToString(), "B" + i.ToString());
+                        value = double.Parse(range.Text);
+                    }
+                }
+                ObjExcel.Quit();
+            }
+            return value;
         }
     }
 }

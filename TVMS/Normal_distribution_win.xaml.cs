@@ -28,19 +28,37 @@ namespace TVMS
 
         }
         
-        private void Get_theretical_frequency(double[] arr)
+        private void Get_theretical_frequency(double[] arr, double[][] intervalArray)
         {
-            
-        }
-        private double[][] GetInterval(double[] arr, int ElementInInterval)
-        {
-            double[][] Res = new double[arr.Length / ElementInInterval + 1][];
-            for(int i = 0; i < arr.Length/ElementInInterval; i++)
+            double X_aver = DiscriptiveStatistics.Average(arr);
+            double disp = DiscriptiveStatistics.Dispersion(arr);
+            double[] P = new double[11];
+            for(int i = 0; i < P.Length; i++)
             {
-                double[] buf = new double[ElementInInterval];
-                for (int j=0;j<ElementInInterval;j++)
+                double[] buf = intervalArray[i];
+                P[i] = DiscriptiveStatistics.GetValueLaplasFunction(Math.Round((buf[0] - X_aver) / disp,2)) * DiscriptiveStatistics.GetValueLaplasFunction(Math.Round((buf[buf.Length - 1] - X_aver) / disp,2));
+            }
+        }
+        private double[][] GetInterval(double[] arr)
+        {
+            double[] newArray = arr.OrderBy(x => x).ToArray();
+
+            double[][] Res = new double[11][];
+            for(int i = 0; i < 2; i++)
+            {
+                double[] buf = new double[56];
+                for (int j = 0; j < buf.Length; j++)
                 {
-                    buf[j] = arr[i + j];
+                    buf[j] = newArray[i*buf.Length+j];
+                }
+                Res[i] = buf;
+            }
+            for(int i = 2; i < 11; i++)
+            {
+                double[] buf = new double[50];
+                for (int j = 0; j < buf.Length; j++)
+                {
+                    buf[j] = newArray[i * buf.Length + j];
                 }
                 Res[i] = buf;
             }
@@ -50,7 +68,7 @@ namespace TVMS
         private void Btn_Click(object sender, RoutedEventArgs e)
         {
             double[] d = DiscriptiveStatistics.GetSample(DiscriptiveStatistics.OpenExcel("D", 2, 570));
-            double[][] newD = GetInterval(d, 5);
+            double[][] newD = GetInterval(d);
             tblres.Text = DiscriptiveStatistics.Output(newD);
         }
     }
