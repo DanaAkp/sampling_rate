@@ -65,25 +65,34 @@ namespace TVMS
 
         private void Btn_Click(object sender, RoutedEventArgs e)
         {
+            double[][] columArray = new double[18][];
             OpenFileDialog ofd = new OpenFileDialog();
             if (ofd.ShowDialog() == true)
             {
                 Microsoft.Office.Interop.Excel.Application ObjExcel = new Microsoft.Office.Interop.Excel.Application();
                 Microsoft.Office.Interop.Excel.Workbook ObjWorkbook = ObjExcel.Workbooks.Open(ofd.FileName, 0, false, 5, "", "", false, Microsoft.Office.Interop.Excel.XlPlatform.xlWindows, "", true, false, 0, true, false, false);
                 Microsoft.Office.Interop.Excel.Worksheet objworksheet = (Microsoft.Office.Interop.Excel.Worksheet)ObjWorkbook.Sheets[1];
-
-
-                Microsoft.Office.Interop.Excel.Range range = objworksheet.get_Range(Colum + i.ToString(), Colum + i.ToString());
-                for (int i = Start; i < End + 1; i++)
+                int col = 65;
+                for (int j = 0; j < 18; j++)
                 {
-                    Microsoft.Office.Interop.Excel.Range range = objworksheet.get_Range(Colum + i.ToString(), Colum + i.ToString());
-                    s += range.Text + "\r\n";
+                    string s = "";
+                   // Microsoft.Office.Interop.Excel.Range range = objworksheet.get_Range(Convert.ToChar(col).ToString() + i.ToString(), Colum + i.ToString());
+                    for (int i = 2; i < 571; i++)
+                    {
+                        Microsoft.Office.Interop.Excel.Range range = objworksheet.get_Range(Convert.ToChar(col+j).ToString() + i.ToString(), Convert.ToChar(col+j).ToString() + i.ToString());
+                        s += range.Text + "\r\n";
+                    }
+                    ObjExcel.Quit();
+
+                    columArray[j] = DiscriptiveStatistics.GetSample(s);
+
                 }
-                ObjExcel.Quit();
             }
 
             double[] d = DiscriptiveStatistics.GetSample(DiscriptiveStatistics.OpenExcel("C", 2, 570));
             double[][] newD = GetInterval(d);
+
+            double[][][][][] er = new double[9][][][][];
 
             double x2 = 0;
             //double[] m_theor = Get_theretical_frequency(d, newD);
