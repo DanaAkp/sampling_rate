@@ -72,16 +72,16 @@ namespace TVMS
                 Microsoft.Office.Interop.Excel.Application ObjExcel = new Microsoft.Office.Interop.Excel.Application();
                 Microsoft.Office.Interop.Excel.Workbook ObjWorkbook = ObjExcel.Workbooks.Open(ofd.FileName, 0, false, 5, "", "", false, Microsoft.Office.Interop.Excel.XlPlatform.xlWindows, "", true, false, 0, true, false, false);
                 Microsoft.Office.Interop.Excel.Worksheet objworksheet = (Microsoft.Office.Interop.Excel.Worksheet)ObjWorkbook.Sheets[1];
-                int col = 65;
+                int col = 66;
                 for (int j = 0; j < 18; j++)
                 {
                     string s = "";
-                   // Microsoft.Office.Interop.Excel.Range range = objworksheet.get_Range(Convert.ToChar(col).ToString() + i.ToString(), Colum + i.ToString());
-                    for (int i = 2; i < 571; i++)
-                    {
-                        Microsoft.Office.Interop.Excel.Range range = objworksheet.get_Range(Convert.ToChar(col+j).ToString() + i.ToString(), Convert.ToChar(col+j).ToString() + i.ToString());
+                   //// Microsoft.Office.Interop.Excel.Range range = objworksheet.get_Range(Convert.ToChar(col).ToString() + i.ToString(), Colum + i.ToString());
+                   // for (int i = 2; i < 571; i++)
+                   // {
+                        Microsoft.Office.Interop.Excel.Range range = objworksheet.get_Range(Convert.ToChar(col+j).ToString() + 2.ToString(), Convert.ToChar(col+j).ToString() + 570.ToString());
                         s += range.Text + "\r\n";
-                    }
+                   // }
                     ObjExcel.Quit();
 
                     columArray[j] = DiscriptiveStatistics.GetSample(s);
@@ -89,21 +89,21 @@ namespace TVMS
                 }
             }
 
-            double[] d = DiscriptiveStatistics.GetSample(DiscriptiveStatistics.OpenExcel("C", 2, 570));
-            double[][] newD = GetInterval(d);
+            //double[] d = DiscriptiveStatistics.GetSample(DiscriptiveStatistics.OpenExcel("C", 2, 570));
+            //double[][] newD = GetInterval(d);
 
-            double[][][][][] er = new double[9][][][][];
+            //double[][][][][] er = new double[9][][][][];
 
-            double x2 = 0;
-            //double[] m_theor = Get_theretical_frequency(d, newD);
-            double[] m_theor = theoretical_freq(d, newD);
-            for (int i = 0; i < newD.Length; i++)
-            {
-                double[] buf = newD[i];
-                x2 += (buf.Length - m_theor[i]) * (buf.Length - m_theor[i]) / m_theor[i];
-            }
+            //double x2 = 0;
+            ////double[] m_theor = Get_theretical_frequency(d, newD);
+            //double[] m_theor = theoretical_freq(d, newD);
+            //for (int i = 0; i < newD.Length; i++)
+            //{
+            //    double[] buf = newD[i];
+            //    x2 += (buf.Length - m_theor[i]) * (buf.Length - m_theor[i]) / m_theor[i];
+            //}
 
-            tblres.Text = x2.ToString();
+            //tblres.Text = x2.ToString();
         }
         private double[] theoretical_freq(double[] arr, double[][] intervalArr)
         {
