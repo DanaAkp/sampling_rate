@@ -8,6 +8,7 @@
         Title="MainWindow" Height="450" Width="800">
     <Grid>
         <Grid.RowDefinitions>
+            <RowDefinition Height="40"/>
             <RowDefinition Height="*"/>
             <RowDefinition Height="*"/>
             <RowDefinition Height="*"/>
@@ -15,22 +16,23 @@
             <RowDefinition Height="*"/>
             <RowDefinition Height="*"/>
             <RowDefinition Height="*"/>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="*"/>
+            <RowDefinition Height="40"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="132*"/>
             <ColumnDefinition Width="132*"/>
             <ColumnDefinition Width="132*"/>
             <ColumnDefinition Width="169*"/>
-            <ColumnDefinition Width="95*"/>
-            <ColumnDefinition Width="132*"/>
+            <ColumnDefinition Width="91*"/>
+            <ColumnDefinition Width="136*"/>
         </Grid.ColumnDefinitions>
         <Label x:Name="lblNameFile" Content="" Grid.Row="8" Grid.ColumnSpan="4"/>
         <Button Click="BtnOpenFile_Click" x:Name="btnOpenFile" Content="Открыть" Grid.Column="1"  Margin="30,10"/>
         <Button Click="BtnRationing_Click" x:Name="btnRationing" Content="Нормировать" Grid.Column="2"  Margin="10"/>
         <Button Click="BtnSaveFile_Click" x:Name="btnSaveFile" Content="Сохранить" Grid.Column="5" Grid.Row="8" Margin="30,10"/>
         <Button x:Name="btnNormalDistribution" Grid.Column="3" Click="BtnNormalDistribution_Click" Content="Норм-ть распр-я" Margin="30,10"/>
+
+        <Button x:Name="btnAnaliz" Grid.Column="5" Click="BtnAnaliz_Click" Content="Анализ" Margin="30,10"/>
         <GroupBox Header="Исходная выборка" Grid.Row="1" Grid.ColumnSpan="3" Grid.RowSpan="3">
             <TextBox TextWrapping="Wrap" ScrollViewer.VerticalScrollBarVisibility="Auto" x:Name="tblSourceSample"/>
         </GroupBox>

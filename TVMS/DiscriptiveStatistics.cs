@@ -204,6 +204,11 @@ namespace TVMS
             s += "\n";
             return s;
         }
+       /// <summary>
+       /// Вывод строки для сохранения в файл
+       /// </summary>
+       /// <param name="arr"></param>
+       /// <returns></returns>
         public static string Save(double[] arr)
         {
             string s = "";
@@ -807,6 +812,18 @@ namespace TVMS
             }
 
             return value;
+        }
+
+        public static double PairKoeff(double[] y, double[] x)
+        {
+            double s_x = Math.Sqrt(Dispersion(x));
+            double s_y = Math.Sqrt(Dispersion(y));
+            double xy_aver = 0;
+            for (int i = 0; i < x.Length; i++) xy_aver += x[i] * y[i];
+            xy_aver /= x.Length;
+
+
+            return (xy_aver - Average(x) * Average(y)) / (s_x * s_y);
         }
     }
 }

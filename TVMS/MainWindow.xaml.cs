@@ -69,5 +69,11 @@ namespace TVMS
             Normal_distribution_win win = new Normal_distribution_win();
             win.Show();
         }
+
+        private void BtnAnaliz_Click(object sender, RoutedEventArgs e)
+        {
+            Analiz win = new Analiz();
+            win.Show();
+        }
     }
 }
