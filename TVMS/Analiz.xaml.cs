@@ -12,6 +12,8 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using LiveCharts;
+using LiveCharts.Wpf;
 
 namespace TVMS
 {
@@ -30,7 +32,7 @@ namespace TVMS
             int colum = 12;
             tbMatrix.Text = "";
 
-    double[][] columArray = new double[colum][];
+            double[][] columArray = new double[colum][];
             double[,] koeff = new double[colum,colum];
 
             for (int i = 0; i < colum; i++)
@@ -51,7 +53,7 @@ namespace TVMS
                 for (int j = 0; j < colum; j++)
                     tbMatrix.Text += string.Format("{0:F2}\t", koeff[i, j]);
 
-                tbMatrix.Text += "\n";
+                tbMatrix.Text += "\n\n";
             }
         }
     }
