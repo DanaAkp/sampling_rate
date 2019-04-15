@@ -7,19 +7,55 @@
         xmlns:local="clr-namespace:TVMS"
         mc:Ignorable="d"
         Title="Analiz" Height="600" Width="1000">
-    <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="69*"/>
-            <RowDefinition Height="350*"/>
-        </Grid.RowDefinitions>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="449*"/>
-            <ColumnDefinition Width="343*"/>
-        </Grid.ColumnDefinitions>
-        <Button x:Name="btn" Click="Btn_Click" Content="btn" Width="80" Height="30"/>
-        <TextBox x:Name="tbMatrix" Grid.Row="1"/>
-        <TextBox x:Name="tbMin" Width="50" Height="30" Grid.Column="1"/>
+    <TabControl>
+        <TabItem Header="Парные коээфициенты">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="69*"/>
+                    <RowDefinition Height="350*"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="617*"/>
+                    <ColumnDefinition Width="343*"/>
+                </Grid.ColumnDefinitions>
+                <Button x:Name="btn" Click="Btn_Click" Content="btn" Width="80" Height="30"/>
+                <TextBox x:Name="tbMatrix" Grid.Row="1"/>
+                <TextBox x:Name="tbMin" Width="50" Height="30" Grid.Column="1"/>
 
-        <!--<lvc:CartesianChart Grid.Column="1" Grid.Row="1" Series = "{Binding SeriesCollection}"  />-->
-    </Grid>
+                <!--<lvc:CartesianChart Grid.Column="1" Grid.Row="1" Series = "{Binding SeriesCollection}"  />-->
+            </Grid>
+        </TabItem>
+        <TabItem Header="Частные коээфициенты">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="69*"/>
+                    <RowDefinition Height="350*"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="617*"/>
+                    <ColumnDefinition Width="369*"/>
+                </Grid.ColumnDefinitions>
+                <Button x:Name="btn2" Click="Btn2_Click" Content="btn" Margin="264,30,263,29"/>
+                <TextBox x:Name="tbMatrix2" Grid.Row="1"/>
+                <TextBox x:Name="tbMin2" Grid.Column="1" Margin="165,30,164,29"/>
+
+            </Grid>
+        </TabItem>
+        <TabItem Header="Множественный коэффициент">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="69*"/>
+                    <RowDefinition Height="350*"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="617*"/>
+                    <ColumnDefinition Width="369*"/>
+                </Grid.ColumnDefinitions>
+                <Button x:Name="btn3" Click="Btn3_Click" Content="btn" Margin="264,30,263,29"/>
+                <TextBox x:Name="tbMatrix3" Grid.Row="1"/>
+                <TextBox x:Name="tbMin3" Grid.Column="1" Margin="165,30,164,29"/>
+
+            </Grid>
+        </TabItem>
+    </TabControl>
 </Window>

@@ -825,5 +825,9 @@ namespace TVMS
 
             return (xy_aver - Average(x) * Average(y)) / (s_x * s_y);
         }
+        public static double PrivateKoeff(double r_xy, double r_xz, double r_yz)
+        {
+            return (r_xy - r_xz * r_yz) / Math.Sqrt((1 - r_xz * r_xz) * (1 - r_yz * r_yz));
+        }
     }
 }
