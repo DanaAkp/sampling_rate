@@ -5,13 +5,13 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:TVMS"
         mc:Ignorable="d"
-        Title="Normal_distribution_win" Height="400" Width="2000">
+        Title="Normal_distribution_win" Height="400" Width="1000">
     <Grid x:Name="gdMain">
         <Grid.RowDefinitions>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="*"/>
+            <RowDefinition Height="87*"/>
+            <RowDefinition Height="97*"/>
+            <RowDefinition Height="92*"/>
+            <RowDefinition Height="93*"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"/>
@@ -25,15 +25,9 @@
             <ColumnDefinition Width="*"/>
             <ColumnDefinition Width="*"/>
             <ColumnDefinition Width="*"/>
-            <ColumnDefinition Width="*"/>
-            <ColumnDefinition Width="*"/>
-            <ColumnDefinition Width="*"/>
-            <ColumnDefinition Width="*"/>
-            <ColumnDefinition Width="*"/>
-            <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
-        <TextBox x:Name="tblres" Grid.RowSpan="3" Grid.ColumnSpan="18"/>
-        <Button x:Name="btn" Grid.Row="3" Click="Btn_Click" Content="btn"/>
+        <TextBox x:Name="tblres" Grid.RowSpan="3" Grid.ColumnSpan="17"/>
+        <Button Margin="25" x:Name="btn" Grid.Row="3" Click="Btn_Click" Content="Ok"/>
         <TextBox TextWrapping="Wrap"  x:Name="tb0" Text="2.	Средний радиус " Grid.Column="0"/>
         <TextBox TextWrapping="Wrap"  x:Name="tb1"  Text="3.	Среднее значение текстуры " Grid.Column="1"/>
         <TextBox TextWrapping="Wrap"  x:Name="tb2" Text="4.	Среднее периметра "  Grid.Column="2"/>
@@ -45,14 +39,7 @@
         <TextBox TextWrapping="Wrap"  x:Name="tb8" Text="10.	 Среднее значение симметрии "  Grid.Column="8"/>
         <TextBox TextWrapping="Wrap"  x:Name="tb9"  Text="11.	 Среднее значение фрактальной размерности " Grid.Column="9"/>
         <TextBox TextWrapping="Wrap"  x:Name="tb10" Text="12.	 Радиус "  Grid.Column="10"/>
-        <TextBox TextWrapping="Wrap"  x:Name="tb11"  Text="13.	 Ошибка текстуры " Grid.Column="11"/>
-        <TextBox TextWrapping="Wrap"  x:Name="tb12" Text="14.	 Ошибка периметра"  Grid.Column="12"/>
-        <TextBox TextWrapping="Wrap"  x:Name="tb13" Text="15.	 Ошибка площади	"  Grid.Column="13"/>
-        <TextBox TextWrapping="Wrap"  x:Name="tb14" Text="16.	 Ошибка гладкость "  Grid.Column="14"/>
-        <TextBox TextWrapping="Wrap"  x:Name="tb15" Text="17.	 Ошибка компактность "  Grid.Column="15"/>
-        <TextBox TextWrapping="Wrap"  x:Name="tb16" Text="18.	 Ошибка вогнутость "  Grid.Column="16"/>
-        <TextBox TextWrapping="Wrap" x:Name="tb17" Text="19.	 Ошибка вогнутые точки "  Grid.Column="17"/>
-        
+      
         <TextBox x:Name="tb0x" Grid.Column="0" Grid.Row="1"/>
         <TextBox x:Name="tb1x" Grid.Column="1" Grid.Row="1"/>
         <TextBox x:Name="tb2x" Grid.Column="2" Grid.Row="1"/>
@@ -64,13 +51,6 @@
         <TextBox x:Name="tb8x" Grid.Column="8" Grid.Row="1"/>
         <TextBox x:Name="tb9x" Grid.Column="9" Grid.Row="1"/>
         <TextBox x:Name="tb10x" Grid.Column="10" Grid.Row="1"/>
-        <TextBox x:Name="tb11x" Grid.Column="11" Grid.Row="1"/>
-        <TextBox x:Name="tb12x" Grid.Column="12" Grid.Row="1"/>
-        <TextBox x:Name="tb13x" Grid.Column="13" Grid.Row="1"/>
-        <TextBox x:Name="tb14x" Grid.Column="14" Grid.Row="1"/>
-        <TextBox x:Name="tb15x" Grid.Column="15" Grid.Row="1"/>
-        <TextBox x:Name="tb16x" Grid.Column="16" Grid.Row="1"/>
-        <TextBox x:Name="tb17x" Grid.Column="17" Grid.Row="1"/>
-        <TextBlock Text="x2 = 16.9" Grid.Row="2"/>
+        <TextBlock Text="x2 = 43.2" Grid.Row="3" Grid.Column="1"/>
     </Grid>
 </Window>

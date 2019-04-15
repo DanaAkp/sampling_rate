@@ -204,6 +204,16 @@ namespace TVMS
             s += "\n";
             return s;
         }
+        public static string Save(double[] arr)
+        {
+            string s = "";
+            for (int i = 0; i < arr.Length; i++)
+            {
+                s += string.Format("{0}\r\n", arr[i]);
+            }
+            s += "\n";
+            return s;
+        }
         /// <summary>
         /// Получение массива выборки данных из строки
         /// </summary>
@@ -237,6 +247,7 @@ namespace TVMS
             }
             return s;
         }
+      
         /// <summary>
         /// Получение строки из определенного столбца в заданном диапазоне
         /// </summary>
@@ -790,9 +801,9 @@ namespace TVMS
             //    ObjExcel.Quit();
             //}
 
-            for(int i = 0; i < Laplas.Keys.Count; i++)
+            foreach(KeyValuePair<double,double> x in Laplas)
             {
-
+                if (x.Key == argument) value = x.Value;
             }
 
             return value;

@@ -60,7 +60,7 @@ namespace TVMS
             sd.Filter = "All files (*.*)|*.*|TXT text (*.txt)|*.txt";
             if (sd.ShowDialog() == true)
             {
-                File.WriteAllText(sd.FileName, DiscriptiveStatistics.Output(sampleRationing));
+                File.WriteAllText(sd.FileName, DiscriptiveStatistics.Save(sampleRationing));
             }
         }
 
