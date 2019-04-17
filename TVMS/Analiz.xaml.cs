@@ -14,17 +14,20 @@ using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using LiveCharts;
 using LiveCharts.Wpf;
+using MathNet;
+using MathNet.Numerics;
+using MathNet.Numerics.LinearAlgebra.Double;
 
 namespace TVMS
 {
     /// <summary>
     /// Логика взаимодействия для Analiz.xaml
     /// </summary>
-    public partial class Analiz : Window
+    public partial class Analiz : System.Windows.Window
     {
         double[][] columArray;
-        double[,] koeffPair;
-        double[,] koeffPrivate;
+        DenseMatrix koeffPair;
+        DenseMatrix koeffPrivate;
         int colum = 12;
         public Analiz()
         {
@@ -36,7 +39,7 @@ namespace TVMS
             tbMatrix.Text = "";
 
             columArray = new double[colum][];
-            koeffPair = new double[colum, colum];
+            koeffPair = new DenseMatrix(colum, colum); 
 
             for (int i = 0; i < colum; i++)
             {
@@ -60,14 +63,19 @@ namespace TVMS
             }
         }
 
+        private double Get_AlgebralAddition(DenseMatrix A, int i, int j)
+        {
+            return Math.Pow(-1, i + j) * GetMinor(A, colum, i, j).Determinant();
+        }
+
         private void Btn2_Click(object sender, RoutedEventArgs e)
         {
             tbMatrix2.Text = "";
-               koeffPrivate = new double[colum, colum];
+            koeffPrivate = new DenseMatrix(colum, colum);
             for(int i = 0; i < colum; i++)
             {
                 for (int j = 0; j < colum; j++)
-                    if (i != j) koeffPrivate[i, j] = DiscriptiveStatistics.PrivateKoeff(koeffPair[0, i], koeffPair[0, j], koeffPair[i, j]);
+                    if (i != j) koeffPrivate[i, j] = Get_AlgebralAddition(koeffPair, i, j) / Math.Sqrt(Get_AlgebralAddition(koeffPair, i, i) * Get_AlgebralAddition(koeffPair, j, i));
                 koeffPrivate[i, i] = koeffPair[i, i];
             }
 
@@ -83,40 +91,33 @@ namespace TVMS
 
         private void Btn3_Click(object sender, RoutedEventArgs e)
         {
-
+            Random rand = new Random();
+            var test = new DenseMatrix(4, 4);
+            for(int i = 0; i < test.RowCount; i++)
+            {
+                for(int j = 0; j < test.ColumnCount; j++)
+                {
+                    test[i, j] = rand.Next(3);
+                }
+            }
+            tbMatrix3.Text = test.Determinant().ToString();
         }
-        public static double GetDeterminant_3(double[,] A, int n)
+        public static DenseMatrix GetMinor(DenseMatrix A, int n, int i, int j)
         {
-            return A[0, 0] * A[1, 1] * A[2, 2] + A[0, 1] * A[1, 2] * A[2, 0] + A[1, 0] * A[2, 1] * A[0, 2] - A[2, 0] * A[1, 1] * A[0, 2] - A[1, 0] * A[0, 1] * A[2, 2] - A[2, 1] * A[1, 2] * A[0, 0];
-        }
-        public static double[,] GetMinor(double[,] A, int n, int i, int j)
-        {
-            double[,] M = new double[n - 1, n - 1];
+            DenseMatrix M = new DenseMatrix(n - 1, n - 1);
 
             for (int k = 0; k < n; k++)
             {
                 for (int m = 0; m < n; m++)
                 {
-                    //if (i != k && m != j)
-                    //{
                     if (k < i && m < j) M[k, m] = A[k, m];
                     if (k > i && m > j) M[k - 1, m - 1] = A[k, m];
                     if (k > i && m < j) M[k - 1, m] = A[k, m];
                     if (k < i && m > j) M[k, m - 1] = A[k, m];
-                    //}
                 }
             }
 
             return M;
-        }
-        public static double GetDeterminant_4(double[,] A, int n)
-        {
-            double determ = 0;
-            for (int i = 0; i < n; i++)
-            {
-                determ += A[0, i] * Math.Pow(-1, 2 + i) * GetDeterminant_3(GetMinor(A, n, 0, i), n);
-            }
-            return determ;
         }
     }
 }
