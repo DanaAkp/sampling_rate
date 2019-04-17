@@ -75,14 +75,23 @@ namespace TVMS
             for(int i = 0; i < colum; i++)
             {
                 for (int j = 0; j < colum; j++)
-                    if (i != j) koeffPrivate[i, j] = Get_AlgebralAddition(koeffPair, i, j) / Math.Sqrt(Get_AlgebralAddition(koeffPair, i, i) * Get_AlgebralAddition(koeffPair, j, i));
+                    if (i != j)
+                    {
+                        double buf1 = Get_AlgebralAddition(koeffPair, i, j);
+                        double buf2 = Get_AlgebralAddition(koeffPair, i, i);
+                        double buf3 = Get_AlgebralAddition(koeffPair, j, i);
+                        koeffPrivate[i, j] = buf1 / Math.Sqrt(buf2 * buf3);
+                    }
                 koeffPrivate[i, i] = koeffPair[i, i];
             }
 
             for (int i = 0; i < colum; i++)
             {
                 for (int j = 0; j < colum; j++)
-                    tbMatrix2.Text += string.Format("{0:F2}\t", koeffPrivate[i, j]);
+                    if(!Double.IsNaN(koeffPrivate[i, j]))
+                        tbMatrix2.Text += string.Format("{0:F2}\t", koeffPrivate[i, j]);
+                    else
+                        tbMatrix2.Text += string.Format("{0:F2}\t", 0);
 
                 tbMatrix2.Text += "\n\n";
             }
