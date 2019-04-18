@@ -36,38 +36,43 @@ namespace TVMS
 
         private void Btn_Click(object sender, RoutedEventArgs e)
         {
-            tbMatrix.Text = "";
+            tbMatrix.Text = "\t";
+            for (int i = 0; i < colum; i++) tbMatrix.Text += (i+1).ToString() + "\t";
 
+            tbMatrix.Text += "\n\n";
             columArray = new double[colum][];
             koeffPair = new DenseMatrix(colum, colum); 
 
             for (int i = 0; i < colum; i++)
-            {
                 columArray[i] = DiscriptiveStatistics.GetSample(File.ReadAllText(@"C:\Users\Данагуль\source\repos\ТВМС\TVMS\Нормированные значения\" + (i + 1).ToString() + ".txt"));
-            }
-
-            for(int i = 0; i < colum; i++)
-            {
-                for(int j = 0; j < colum; j++)
-                {
+            for (int i = 0; i < colum; i++)
+                for (int j = 0; j < colum; j++)
                     koeffPair[i, j] = koeffPair[j, i] = DiscriptiveStatistics.PairKoeff(columArray[i], columArray[j]);
-                }
-            }
+
+            DenseMatrix t_Matrix = T_Matrix_PairKoeff();
 
             for (int i = 0; i < colum; i++)
             {
+                tbMatrix.Text += (i + 1).ToString() + "\t";
                 for (int j = 0; j < colum; j++)
                     tbMatrix.Text += string.Format("{0:F2}\t", koeffPair[i, j]);
+                tbMatrix.Text += "\n\n";
+            }
 
+            tbMatrix.Text += "Коэффициент значим при t > 2.178\n";
+            tbMatrix.Text += "\t";
+            for (int i = 0; i < colum; i++) tbMatrix.Text += (i + 1).ToString() + "\t";
+            tbMatrix.Text += "\n\n";
+            for (int i = 0; i < colum; i++)
+            {
+                tbMatrix.Text += (i + 1).ToString() + "\t";
+                for (int j = 0; j < colum; j++)
+                    tbMatrix.Text += string.Format("{0:F2}\t", t_Matrix[i, j]);
                 tbMatrix.Text += "\n\n";
             }
         }
-
-        private double Get_AlgebralAddition(DenseMatrix A, int i, int j)
-        {
-            return Math.Pow(-1, i + j) * GetMinor(A, colum, i, j).Determinant();
-        }
-
+        
+        //плохо работает, появляются значения NaN и больше1
         private void Btn2_Click(object sender, RoutedEventArgs e)
         {
             tbMatrix2.Text = "";
@@ -111,6 +116,20 @@ namespace TVMS
             }
             tbMatrix3.Text = test.Determinant().ToString();
         }
+
+        #region Методы
+        public DenseMatrix T_Matrix_PairKoeff()
+        {
+            DenseMatrix t_Matrix = new DenseMatrix(colum);
+            for (int i = 0; i < colum; i++)
+            {
+                for (int j = 0; j < colum; j++)
+                {
+                    t_Matrix[i, j] = Math.Abs(koeffPair[i, j]) * Math.Sqrt((colum - 2) / (1 - koeffPair[i, j]));
+                }
+            }
+            return t_Matrix;
+        }
         public static DenseMatrix GetMinor(DenseMatrix A, int n, int i, int j)
         {
             DenseMatrix M = new DenseMatrix(n - 1, n - 1);
@@ -128,5 +147,10 @@ namespace TVMS
 
             return M;
         }
+        private double Get_AlgebralAddition(DenseMatrix A, int i, int j)
+        {
+            return Math.Pow(-1, i + j) * GetMinor(A, colum, i, j).Determinant();
+        }
+        #endregion
     }
 }

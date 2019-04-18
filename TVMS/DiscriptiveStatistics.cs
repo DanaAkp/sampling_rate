@@ -252,7 +252,6 @@ namespace TVMS
             }
             return s;
         }
-      
         /// <summary>
         /// Получение строки из определенного столбца в заданном диапазоне
         /// </summary>
@@ -813,7 +812,12 @@ namespace TVMS
 
             return value;
         }
-
+        /// <summary>
+        /// Расчет парного коэффициента корреляции
+        /// </summary>
+        /// <param name="y"></param>
+        /// <param name="x"></param>
+        /// <returns></returns>
         public static double PairKoeff(double[] y, double[] x)
         {
             double s_x = Math.Sqrt(Dispersion(x));
@@ -825,6 +829,13 @@ namespace TVMS
 
             return (xy_aver - Average(x) * Average(y)) / (s_x * s_y);
         }
+        /// <summary>
+        /// Расчет частного коэффициента по формуле
+        /// </summary>
+        /// <param name="r_xy"></param>
+        /// <param name="r_xz"></param>
+        /// <param name="r_yz"></param>
+        /// <returns></returns>
         public static double PrivateKoeff(double r_xy, double r_xz, double r_yz)
         {
             return (r_xy - r_xz * r_yz) / Math.Sqrt((1 - r_xz * r_xz) * (1 - r_yz * r_yz));
