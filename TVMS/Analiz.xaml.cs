@@ -36,43 +36,27 @@ namespace TVMS
 
         private void Btn_Click(object sender, RoutedEventArgs e)
         {
-            tbMatrix.Text = "\t";
-            for (int i = 0; i < colum; i++) tbMatrix.Text += (i+1).ToString() + "\t";
-
-            tbMatrix.Text += "\n\n";
             columArray = new double[colum][];
             koeffPair = new DenseMatrix(colum, colum); 
 
             for (int i = 0; i < colum; i++)
                 columArray[i] = DiscriptiveStatistics.GetSample(File.ReadAllText(@"C:\Users\Данагуль\source\repos\ТВМС\TVMS\Нормированные значения\" + (i + 1).ToString() + ".txt"));
+
             for (int i = 0; i < colum; i++)
                 for (int j = 0; j < colum; j++)
                     koeffPair[i, j] = koeffPair[j, i] = DiscriptiveStatistics.PairKoeff(columArray[i], columArray[j]);
 
-            DenseMatrix t_Matrix = T_Matrix_PairKoeff();
+            DenseMatrix t_Matrix = T_Matrix_Koeff(koeffPair);
 
-            for (int i = 0; i < colum; i++)
-            {
-                tbMatrix.Text += (i + 1).ToString() + "\t";
-                for (int j = 0; j < colum; j++)
-                    tbMatrix.Text += string.Format("{0:F2}\t", koeffPair[i, j]);
-                tbMatrix.Text += "\n\n";
-            }
 
+            tbMatrix.Text = Output_R(koeffPair);
             tbMatrix.Text += "Коэффициент значим при t > 2.178\n";
-            tbMatrix.Text += "\t";
-            for (int i = 0; i < colum; i++) tbMatrix.Text += (i + 1).ToString() + "\t";
-            tbMatrix.Text += "\n\n";
-            for (int i = 0; i < colum; i++)
-            {
-                tbMatrix.Text += (i + 1).ToString() + "\t";
-                for (int j = 0; j < colum; j++)
-                    tbMatrix.Text += string.Format("{0:F2}\t", t_Matrix[i, j]);
-                tbMatrix.Text += "\n\n";
-            }
+            tbMatrix.Text += Output_R(t_Matrix);
+
+
+
         }
         
-        //плохо работает, появляются значения NaN и больше1
         private void Btn2_Click(object sender, RoutedEventArgs e)
         {
             tbMatrix2.Text = "";
@@ -82,50 +66,52 @@ namespace TVMS
                 for (int j = 0; j < colum; j++)
                     if (i != j)
                     {
-                        double buf1 = Get_AlgebralAddition(koeffPair, i, j);
-                        double buf2 = Get_AlgebralAddition(koeffPair, i, i);
-                        double buf3 = Get_AlgebralAddition(koeffPair, j, i);
-                        koeffPrivate[i, j] = buf1 / Math.Sqrt(buf2 * buf3);
+                        koeffPrivate[i, j] = Get_AlgebralAddition(koeffPair, i, j) / Math.Sqrt(Get_AlgebralAddition(koeffPair, i, i) * Get_AlgebralAddition(koeffPair, j, j));
                     }
                 koeffPrivate[i, i] = koeffPair[i, i];
             }
-
-            for (int i = 0; i < colum; i++)
-            {
-                for (int j = 0; j < colum; j++)
-                    if(!Double.IsNaN(koeffPrivate[i, j]))
-                        tbMatrix2.Text += string.Format("{0:F2}\t", koeffPrivate[i, j]);
-                    else
-                        tbMatrix2.Text += string.Format("{0:F2}\t", 0);
-
-                tbMatrix2.Text += "\n\n";
-            }
-
+            DenseMatrix t_Matrix = T_Matrix_Koeff(koeffPrivate);
+            tbMatrix2.Text = Output_R(koeffPrivate);
+            tbMatrix.Text += "Коэффициент значим при t > 2.178\n";
+            tbMatrix2.Text += Output_R(t_Matrix);
         }
 
         private void Btn3_Click(object sender, RoutedEventArgs e)
         {
-            Random rand = new Random();
-            var test = new DenseMatrix(4, 4);
-            for(int i = 0; i < test.RowCount; i++)
+            double det_R = koeffPrivate.Determinant();
+            DenseMatrix R = new DenseMatrix(colum);
+            for(int i = 0; i < colum; i++)
             {
-                for(int j = 0; j < test.ColumnCount; j++)
-                {
-                    test[i, j] = rand.Next(3);
-                }
+                for(int j=0;j<colum;j++)
+                     R[i,j] = Math.Sqrt(1 - (det_R / Get_AlgebralAddition(koeffPrivate, i,i)));
             }
-            tbMatrix3.Text = test.Determinant().ToString();
+            tbMatrix3.Text = Output_R(R);
         }
 
         #region Методы
-        public DenseMatrix T_Matrix_PairKoeff()
+        public string Output_R(DenseMatrix Matrix)
+        {
+            string s = "\t";
+            for (int i = 0; i < colum; i++) s += (i + 1).ToString() + "\t";
+            s += "\n\n";
+            for (int i = 0; i < colum; i++)
+            {
+                s += (i + 1).ToString() + "\t";
+                for (int j = 0; j < colum; j++)
+                    s += string.Format("{0:F2}\t", Matrix[i, j]);
+                s += "\n\n";
+            }
+            s += "\n\n";
+            return s;
+        }
+        public DenseMatrix T_Matrix_Koeff(DenseMatrix Matrix_Koeff)
         {
             DenseMatrix t_Matrix = new DenseMatrix(colum);
             for (int i = 0; i < colum; i++)
             {
                 for (int j = 0; j < colum; j++)
                 {
-                    t_Matrix[i, j] = Math.Abs(koeffPair[i, j]) * Math.Sqrt((colum - 2) / (1 - koeffPair[i, j]));
+                    t_Matrix[i, j] = Math.Abs(Matrix_Koeff[i, j]) * Math.Sqrt((colum - 2) / (1 - Matrix_Koeff[i, j]));
                 }
             }
             return t_Matrix;
