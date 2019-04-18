@@ -26,6 +26,7 @@ namespace TVMS
     public partial class Analiz : System.Windows.Window
     {
         double[][] columArray;
+        DenseMatrix columArray2;
         DenseMatrix koeffPair;
         DenseMatrix koeffPrivate;
         int colum = 12;
@@ -37,8 +38,7 @@ namespace TVMS
         private void Btn_Click(object sender, RoutedEventArgs e)
         {
             columArray = new double[colum][];
-            koeffPair = new DenseMatrix(colum, colum); 
-
+            koeffPair = new DenseMatrix(colum, colum);
             for (int i = 0; i < colum; i++)
                 columArray[i] = DiscriptiveStatistics.GetSample(File.ReadAllText(@"C:\Users\Данагуль\source\repos\ТВМС\TVMS\Нормированные значения\" + (i + 1).ToString() + ".txt"));
 
@@ -48,13 +48,9 @@ namespace TVMS
 
             DenseMatrix t_Matrix = T_Matrix_Koeff(koeffPair);
 
-
             tbMatrix.Text = Output_R(koeffPair);
-            tbMatrix.Text += "Коэффициент значим при t > 2.178\n";
+            tbMatrix.Text += "Коэффициент значим при t > 1.96\n";
             tbMatrix.Text += Output_R(t_Matrix);
-
-
-
         }
         
         private void Btn2_Click(object sender, RoutedEventArgs e)
@@ -70,22 +66,30 @@ namespace TVMS
                     }
                 koeffPrivate[i, i] = koeffPair[i, i];
             }
-            DenseMatrix t_Matrix = T_Matrix_Koeff(koeffPrivate);
             tbMatrix2.Text = Output_R(koeffPrivate);
-            tbMatrix.Text += "Коэффициент значим при t > 2.178\n";
-            tbMatrix2.Text += Output_R(t_Matrix);
         }
 
         private void Btn3_Click(object sender, RoutedEventArgs e)
         {
-            double det_R = koeffPrivate.Determinant();
+            double det_R = koeffPair.Determinant();
             DenseMatrix R = new DenseMatrix(colum);
-            for(int i = 0; i < colum; i++)
+            double[] r_m = new double[colum];
+            tbMatrix3.Text = "Индексы детерминации для множественных коэффициентов:\n";
+            for (int i = 0; i < colum; i++) tbMatrix3.Text += (i + 1).ToString() + "\t";
+            tbMatrix3.Text += "\n";
+
+            for (int i = 0; i < colum; i++)
             {
-                for(int j=0;j<colum;j++)
-                     R[i,j] = Math.Sqrt(1 - (det_R / Get_AlgebralAddition(koeffPrivate, i,i)));
+                r_m[i] = Math.Sqrt(1 - (det_R / Get_AlgebralAddition(koeffPair, i, i)));
+                tbMatrix3.Text += string.Format("{0:F2}\t", r_m[i]*r_m[i]);
             }
-            tbMatrix3.Text = Output_R(R);
+            tbMatrix3.Text += "\n";
+            double[] Fr_matrix = new double[colum];
+            for (int i = 0; i < colum; i++)
+            {
+                Fr_matrix[i] = (r_m[i] * r_m[i] * 556) / ((1 - r_m[i] * r_m[i]) * 12);
+                tbMatrix3.Text+= string.Format("{0:F2}\t", Fr_matrix[i]);
+            }
         }
 
         #region Методы
@@ -136,6 +140,17 @@ namespace TVMS
         private double Get_AlgebralAddition(DenseMatrix A, int i, int j)
         {
             return Math.Pow(-1, i + j) * GetMinor(A, colum, i, j).Determinant();
+        }
+        public DenseMatrix GetDense(double[][] A)
+        {
+            double[] buf = A[0];
+            DenseMatrix res = new DenseMatrix(colum, buf.Length);
+            for (int i = 0; i < colum; i++)
+            {
+                buf = A[i];
+                for (int j = 0; j < buf.Length; j++) res[i, j] = buf[j];
+            }
+            return res;
         }
         #endregion
     }
