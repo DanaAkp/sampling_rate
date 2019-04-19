@@ -83,15 +83,14 @@ namespace TVMS
                 r_m[i] = Math.Sqrt(1 - (det_R / Get_AlgebralAddition(koeffPair, i, i)));
                 tbMatrix3.Text += string.Format("{0:F2}\t", r_m[i]*r_m[i]);
             }
-            tbMatrix3.Text += "\n";
+            tbMatrix3.Text += "\nЗначимость коэффициентов:\n";
             double[] Fr_matrix = new double[colum];
             for (int i = 0; i < colum; i++)
             {
-                Fr_matrix[i] = (r_m[i] * r_m[i] * 556) / ((1 - r_m[i] * r_m[i]) * 12);
-                tbMatrix3.Text+= string.Format("{0:F2}\t", Fr_matrix[i]);
+                Fr_matrix[i] = r_m[i] * r_m[i] * 567 / (1 - r_m[i] * r_m[i]);
+                tbMatrix3.Text+= string.Format("{0:F2}\n", Fr_matrix[i]);
             }
         }
-
         #region Методы
         public string Output_R(DenseMatrix Matrix)
         {
