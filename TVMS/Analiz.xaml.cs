@@ -69,7 +69,7 @@ namespace TVMS
             foreach(KeyValuePair<double,double> x in X_Y)
             {
                 Ellipse l = new Ellipse();
-                l.Width = l.Height = 3;
+                l.Width = l.Height = 5;
                 l.Fill = Brushes.Red;
                 Canvas.SetTop(l, x.Key);
                 Canvas.SetLeft(l,x.Value);
