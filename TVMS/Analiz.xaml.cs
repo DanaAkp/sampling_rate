@@ -54,18 +54,18 @@ namespace TVMS
 
             var X_Y = new List<KeyValuePair<double, double>>()
             {
-                new KeyValuePair<double,double>( 150, 0 ),
-                new KeyValuePair<double,double>( 225, 150*(2-Math.Sqrt(3))/2 ),
-                new KeyValuePair<double, double>(300-150*(2-Math.Sqrt(3))/2, 75 ),
-               new KeyValuePair<double, double>( 300, 150 ),
-               new KeyValuePair<double, double>(300-150*(2-Math.Sqrt(3))/2, 225 ),
-                new KeyValuePair<double, double>(225, 300-150*(2-Math.Sqrt(3))/2 ),
-                new KeyValuePair<double, double>(150, 300 ),
-               new KeyValuePair<double, double>( 75, 300-150*(2-Math.Sqrt(3))/2 ),
-                new KeyValuePair<double, double>( 150*(2-Math.Sqrt(3))/2, 225 ),
-                new KeyValuePair<double, double>(0, 150 ),
-                new KeyValuePair<double, double>( 150*(2-Math.Sqrt(3))/2, 75 ),
-               new KeyValuePair<double, double>( 75, 150*(2-Math.Sqrt(3))/2 ) };
+                new KeyValuePair<double,double>( 150-1, 0 ),
+                new KeyValuePair<double,double>( 225-1, 150*(2-Math.Sqrt(3))/2-1 ),
+                new KeyValuePair<double, double>(300-150*(2-Math.Sqrt(3))/2-1, 75-1 ),
+               new KeyValuePair<double, double>( 300-1, 150-1 ),
+               new KeyValuePair<double, double>(300-150*(2-Math.Sqrt(3))/2-1, 225-1 ),
+                new KeyValuePair<double, double>(225-1, 300-150*(2-Math.Sqrt(3))/2-1 ),
+                new KeyValuePair<double, double>(150-1, 300-1 ),
+               new KeyValuePair<double, double>( 75-1, 300-150*(2-Math.Sqrt(3))/2 -1),
+                new KeyValuePair<double, double>( 150*(2-Math.Sqrt(3))/2-1, 225-1 ),
+                new KeyValuePair<double, double>(0, 150-1 ),
+                new KeyValuePair<double, double>( 150*(2-Math.Sqrt(3))/2-1, 75 -1),
+               new KeyValuePair<double, double>( 75-1, 150*(2-Math.Sqrt(3))/2-1 ) };
             foreach(KeyValuePair<double,double> x in X_Y)
             {
                 Ellipse l = new Ellipse();
@@ -76,7 +76,45 @@ namespace TVMS
 
                 cnvMain.Children.Add(l);
             }
-
+            for(int i = 0; i < colum; i++)
+            {
+                for(int j=i+1;j<colum;j++)
+                {
+                    if (i != j && koeffPair[i, j] > 0.3 && koeffPair[i, j] < 0.5)
+                    {
+                        Line l = new Line();
+                        l.X1 = X_Y[i].Key;
+                        l.X2 = X_Y[j].Key;
+                        l.Y1 = X_Y[i].Value;
+                        l.Y2 = X_Y[j].Value;
+                        l.Stroke = Brushes.Red;
+                        l.StrokeThickness = 1;
+                        cnvMain.Children.Add(l);
+                    }
+                    if (i != j && koeffPair[i, j] > 0.5 && koeffPair[i, j] < 0.7)
+                    {
+                        Line l = new Line();
+                        l.X1 = X_Y[i].Key;
+                        l.X2 = X_Y[j].Key;
+                        l.Y1 = X_Y[i].Value;
+                        l.Y2 = X_Y[j].Value;
+                        l.Stroke = Brushes.Yellow;
+                        l.StrokeThickness = 1;
+                        cnvMain.Children.Add(l);
+                    }
+                    if (i != j && koeffPair[i, j] > 0.7 && koeffPair[i, j] < 1)
+                    {
+                        Line l = new Line();
+                        l.X1 = X_Y[i].Key;
+                        l.X2 = X_Y[j].Key;
+                        l.Y1 = X_Y[i].Value;
+                        l.Y2 = X_Y[j].Value;
+                        l.Stroke = Brushes.Green;
+                        l.StrokeThickness = 1;
+                        cnvMain.Children.Add(l);
+                    }
+                }
+            }
         }
         
         private void Btn2_Click(object sender, RoutedEventArgs e)
