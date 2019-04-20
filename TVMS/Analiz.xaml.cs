@@ -51,6 +51,32 @@ namespace TVMS
             tbMatrix.Text = Output_R(koeffPair);
             tbMatrix.Text += "Коэффициент значим при t > 1.96\n";
             tbMatrix.Text += Output_R(t_Matrix);
+
+            var X_Y = new List<KeyValuePair<double, double>>()
+            {
+                new KeyValuePair<double,double>( 150, 0 ),
+                new KeyValuePair<double,double>( 225, 150*(2-Math.Sqrt(3))/2 ),
+                new KeyValuePair<double, double>(300-150*(2-Math.Sqrt(3))/2, 75 ),
+               new KeyValuePair<double, double>( 300, 150 ),
+               new KeyValuePair<double, double>(300-150*(2-Math.Sqrt(3))/2, 225 ),
+                new KeyValuePair<double, double>(225, 300-150*(2-Math.Sqrt(3))/2 ),
+                new KeyValuePair<double, double>(150, 300 ),
+               new KeyValuePair<double, double>( 75, 300-150*(2-Math.Sqrt(3))/2 ),
+                new KeyValuePair<double, double>( 150*(2-Math.Sqrt(3))/2, 225 ),
+                new KeyValuePair<double, double>(0, 150 ),
+                new KeyValuePair<double, double>( 150*(2-Math.Sqrt(3))/2, 75 ),
+               new KeyValuePair<double, double>( 75, 150*(2-Math.Sqrt(3))/2 ) };
+            foreach(KeyValuePair<double,double> x in X_Y)
+            {
+                Ellipse l = new Ellipse();
+                l.Width = l.Height = 3;
+                l.Fill = Brushes.Red;
+                Canvas.SetTop(l, x.Key);
+                Canvas.SetLeft(l,x.Value);
+
+                cnvMain.Children.Add(l);
+            }
+
         }
         
         private void Btn2_Click(object sender, RoutedEventArgs e)
